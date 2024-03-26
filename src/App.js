@@ -4,7 +4,7 @@ import './App.css';
 function App() {
 
   const [countries, setCountries] = useState([])
-  const [search, setSearch] = useState("fra")
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     if (search !== "") {
