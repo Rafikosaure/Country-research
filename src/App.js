@@ -22,8 +22,10 @@ function App() {
           setCountries([]);
         }
       })
+    } else {
+      setCountries([])
     }
-  }, [search, countries])
+  }, [search])
 
   return (
     <div className="App">
