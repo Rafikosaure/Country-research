@@ -6,15 +6,23 @@ function App() {
   const [countries, setCountries] = useState([])
   const [search, setSearch] = useState("")
 
+  // let searchParams = new URLSearchParams(`https://restcountries.com/v3.1/name`);
+  // let checkParams = searchParams.has(`${search}`)
+
   useEffect(() => {
-    if (search !== "") {
+    if (search.length > 0) {
       fetch(`https://restcountries.com/v3.1/name/${search}`)
       .then(response => response.json())
+      // .then(console.log(checkParams))
       // .then(data => console.log(data))
-      .then(response => setCountries(response))
-      .catch(error => console.log(error))
+      .then(json => {
+        if (Array.isArray(json)) {
+          setCountries(json);
+        } else {
+          setCountries([]);
+        }
+      })
     }
-    
   }, [search, countries])
 
   return (
@@ -25,12 +33,9 @@ function App() {
       </form>
       <div className='div-result'>
         <h2>Résultats de recherche</h2>
-        {search !== "" ?
-          countries.map((country) =>
-            <div className='div-country' key={country.name.official}>{country.name.official}</div>
-          ) 
-          : 
-          <div className='div-country'></div>}
+          {countries.map((country) =>
+              <div className='div-country' key={country.name.official}>{country.name.official} {country.flag}</div>
+          )}
       </div>
     </div>
   );
